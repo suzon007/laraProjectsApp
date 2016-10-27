@@ -1,23 +1,91 @@
-## Laravel PHP Framework
+#Project and Task App
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Project and Task App is a PHP **laravel 5** framework based application inspired by this [tutorial](https://www.flynsarmy.com/2015/02/creating-a-basic-todo-application-in-laravel-5-part-1/).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+##Features
 
-## Official Documentation
+- Uses Bootstrap Framework.
+- Simple interface.
+- CRUD functionalities.
+##How to use the App
+- Open http://dummy.url/projects Here you will find the Option to create project. If you had any, they will also be there. 
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+- In the create project page(http://dummy.url/projects/create) You can add your project's name and it's slug. The slug will be used in the URL field. After submitting your project it will take you the Projects page with the newly created Project. You can use EDIT or DELETE option.
 
-## Contributing
+-  Click on any project. You can add Task to it, edit or delete the tasks.
+###Enjoy!
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+##Requirements
 
-### License
+- [Composer](https://getcomposer.org/)
+- [Laravel 5.0](https://laravel.com/docs/5.0)
+- [Laravel Form Helpers](https://www.flynsarmy.com/2015/02/install-illuminatehtml-laravel-5/)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+##Setup
+
+1. Setup your database by editing the env file.
+
+```
+DB_HOST=localhost
+DB_DATABASE=your_db_name
+DB_USERNAME=db_user_name
+DB_PASSWORD=your_pass
+```
+2. Perform the migration:
+```
+php artisan migrate
+
+```
+##Model
+We have two model Task and Projects
+
+
+##Controller
+
+We have two controller. **ProjectsController** and **TasksController** in our App/Http/Controllers folder. 
+
+##Url Slug
+We use this piece of code in route to use slug like  /projects/my-first-project/tasks/buy-milk instead of /projects/1/tasks/2.
+```
+Route::bind('tasks', function($value, $route) {
+	return App\Task::whereSlug($value)->first();
+});
+Route::bind('projects', function($value, $route) {
+	return App\Project::whereSlug($value)->first();
+});
+```
+This will override the default behavior for the tasks and projects wildcards in php artisan routes.
+
+##Model Route Binding
+Provided controller methods with object instead of ID (in our route)
+```
+Route::model('tasks', 'Task');
+Route::model('projects', 'Project');
+```
+And in controllers passed the object to the controller method like this
+```
+public function edit(Project $project)
+```
+
+##Model Relations
+On the /app/Project.php 
+```
+public function tasks()
+{
+	return $this->hasMany('App\Task');
+}
+```
+On the /app/Task.php
+```
+public function project()
+{
+	return $this->belongsTo('App\Project');
+}
+``` 
+
+
+##Layouts
+In the folder *resources/views* **app.blade.php** is our main controller layout. 
+
+

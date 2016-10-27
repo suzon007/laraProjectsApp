@@ -45,6 +45,9 @@ We have two model Task and Projects
 
 We have two controller. **ProjectsController** and **TasksController** in our App/Http/Controllers folder. 
 
+In the ProjectsController the method **store**, **update**, **destroy**, **create**, **show** methods respectively store, update, destroy, create and show the Projects.
+Similarly same thing happen in TaskController for the Tasks. 
+
 ##Url Slug
 We use this piece of code in route to use slug like  /projects/my-first-project/tasks/buy-milk instead of /projects/1/tasks/2.
 ```
